@@ -176,7 +176,7 @@ class SettingsViewModel(
     private val _combineLocalAndYouTubeLiked = MutableStateFlow<Boolean>(false)
     val combineLocalAndYouTubeLiked: StateFlow<Boolean> = _combineLocalAndYouTubeLiked
 
-    private val _androidAutoLikeInsteadOfPrevious = MutableStateFlow(true)
+    private val _androidAutoLikeInsteadOfPrevious = MutableStateFlow(false)
     val androidAutoLikeInsteadOfPrevious: StateFlow<Boolean> = _androidAutoLikeInsteadOfPrevious
 
     private val _downloadQuality = MutableStateFlow<String?>(null)
