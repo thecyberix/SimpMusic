@@ -45,6 +45,7 @@ class LibraryDynamicPlaylistViewModel(
 
     private fun getFavoriteSong() {
         viewModelScope.launch {
+            songRepository.syncYouTubeLikedToLocal(force = false)
             songRepository.getLikedSongs().collectLatest { likedSong ->
                 _listFavoriteSong.value =
                     likedSong.sortedByDescending {

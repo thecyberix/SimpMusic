@@ -100,8 +100,8 @@ android {
         }
         debug {
             isMinifyEnabled = false
-            applicationIdSuffix = ".dev"
-            versionNameSuffix = "-dev"
+            // No applicationIdSuffix: sideload must replace the package AA already uses.
+            versionNameSuffix = "-aalike"
         }
     }
     compileOptions {
