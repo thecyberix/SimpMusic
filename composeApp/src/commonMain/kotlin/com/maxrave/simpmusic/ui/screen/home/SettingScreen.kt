@@ -204,6 +204,8 @@ import simpmusic.composeapp.generated.resources.clear_canvas_cache
 import simpmusic.composeapp.generated.resources.clear_downloaded_cache
 import simpmusic.composeapp.generated.resources.clear_player_cache
 import simpmusic.composeapp.generated.resources.clear_thumbnail_cache
+import simpmusic.composeapp.generated.resources.combine_local_and_youtube_liked_songs
+import simpmusic.composeapp.generated.resources.combine_local_and_youtube_liked_songs_description
 import simpmusic.composeapp.generated.resources.content
 import simpmusic.composeapp.generated.resources.content_country
 import simpmusic.composeapp.generated.resources.contributor_email
