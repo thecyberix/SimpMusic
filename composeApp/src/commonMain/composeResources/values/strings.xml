@@ -540,6 +540,8 @@
     <string name="keep_your_youtube_playlist_offline_description">Save your YT playlist to local and keep to show when offline</string>
     <string name="combine_local_and_youtube_liked_songs">Replace Favorite by YouTube Liked when logged in</string>
     <string name="combine_local_and_youtube_liked_songs_description">Using only YouTube Liked (not support like a song when offline)</string>
+    <string name="android_auto_like_instead_of_previous">Like instead of Previous</string>
+    <string name="android_auto_like_instead_of_previous_description">Puts Like in the Previous slot; steering-wheel Previous likes. On-screen Previous still skips.</string>
     <string name="this_year">This year</string>
     <string name="last_90_days">Last 90 days</string>
     <string name="last_30_days">Last 30 days</string>

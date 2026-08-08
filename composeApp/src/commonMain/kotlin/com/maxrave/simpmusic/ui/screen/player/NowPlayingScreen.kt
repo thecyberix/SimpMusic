@@ -1578,7 +1578,9 @@ fun NowPlayingScreenContent(
                                                 }
                                             }
                                         }
-                                        if (sharedViewModel.isUserLoggedIn()) {
+                                        if (sharedViewModel.isUserLoggedIn() &&
+                                            !sharedViewModel.isCombineFavoriteAndYTLiked()
+                                        ) {
                                             Spacer(modifier = Modifier.size(16.dp))
                                             Crossfade(
                                                 targetState = likeStatus,
@@ -2101,7 +2103,9 @@ fun NowPlayingScreenContent(
                                                         }
                                                     }
                                                 }
-                                                if (sharedViewModel.isUserLoggedIn()) {
+                                                if (sharedViewModel.isUserLoggedIn() &&
+                                            !sharedViewModel.isCombineFavoriteAndYTLiked()
+                                        ) {
                                                     Spacer(modifier = Modifier.size(16.dp))
                                                     Crossfade(
                                                         targetState = likeStatus,

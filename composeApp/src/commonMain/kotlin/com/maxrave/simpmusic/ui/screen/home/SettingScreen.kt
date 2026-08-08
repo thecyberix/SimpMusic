@@ -173,6 +173,8 @@ import simpmusic.composeapp.generated.resources.add_an_account
 import simpmusic.composeapp.generated.resources.ai
 import simpmusic.composeapp.generated.resources.ai_api_key
 import simpmusic.composeapp.generated.resources.ai_provider
+import simpmusic.composeapp.generated.resources.android_auto_like_instead_of_previous
+import simpmusic.composeapp.generated.resources.android_auto_like_instead_of_previous_description
 import simpmusic.composeapp.generated.resources.anonymous
 import simpmusic.composeapp.generated.resources.app_name
 import simpmusic.composeapp.generated.resources.audio
@@ -457,6 +459,7 @@ fun SettingScreen(
     val localTrackingEnabled by viewModel.localTrackingEnabled.collectAsStateWithLifecycle(initialValue = false)
     val blogNotificationEnabled by viewModel.blogNotificationEnabled.collectAsStateWithLifecycle()
     val combineLocalAndYouTubeLiked by viewModel.combineLocalAndYouTubeLiked.collectAsStateWithLifecycle()
+    val androidAutoLikeInsteadOfPrevious by viewModel.androidAutoLikeInsteadOfPrevious.collectAsStateWithLifecycle()
     val playVideo by remember { viewModel.playVideoInsteadOfAudio.map { it == TRUE } }.collectAsStateWithLifecycle(initialValue = false)
     val videoQuality by viewModel.videoQuality.collectAsStateWithLifecycle()
     val sendData by remember { viewModel.sendBackToGoogle.map { it == TRUE } }.collectAsStateWithLifecycle(initialValue = false)
@@ -864,13 +867,18 @@ fun SettingScreen(
                     subtitle = stringResource(Res.string.local_tracking_description),
                     switch = (localTrackingEnabled to { viewModel.setLocalTrackingEnabled(it) }),
                 )
-                /*
                 SettingItem(
                     title = stringResource(Res.string.combine_local_and_youtube_liked_songs),
                     subtitle = stringResource(Res.string.combine_local_and_youtube_liked_songs_description),
-                    switch = (combineLocalAndYouTubeLiked to { viewModel.setCombineLocalAndYouTubeLiked(it) })
+                    switch = (combineLocalAndYouTubeLiked to { viewModel.setCombineLocalAndYouTubeLiked(it) }),
                 )
-                 */
+                if (getPlatform() == Platform.Android) {
+                    SettingItem(
+                        title = stringResource(Res.string.android_auto_like_instead_of_previous),
+                        subtitle = stringResource(Res.string.android_auto_like_instead_of_previous_description),
+                        switch = (androidAutoLikeInsteadOfPrevious to { viewModel.setAndroidAutoLikeInsteadOfPrevious(it) }),
+                    )
+                }
                 SettingItem(
                     title = stringResource(Res.string.proxy),
                     subtitle = stringResource(Res.string.proxy_description),

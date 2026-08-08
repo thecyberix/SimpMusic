@@ -50,6 +50,7 @@ import simpmusic.composeapp.generated.resources.clear_canvas_cache
 import simpmusic.composeapp.generated.resources.clear_downloaded_cache
 import simpmusic.composeapp.generated.resources.clear_player_cache
 import simpmusic.composeapp.generated.resources.clear_thumbnail_cache
+import simpmusic.composeapp.generated.resources.log_in_to_YouTube
 import simpmusic.composeapp.generated.resources.log_out_confirm_message
 import simpmusic.composeapp.generated.resources.restore_failed
 import simpmusic.composeapp.generated.resources.restore_in_progress
@@ -191,6 +192,9 @@ class SettingsViewModel(
     private val _combineLocalAndYouTubeLiked = MutableStateFlow<Boolean>(false)
     val combineLocalAndYouTubeLiked: StateFlow<Boolean> = _combineLocalAndYouTubeLiked
 
+    private val _androidAutoLikeInsteadOfPrevious = MutableStateFlow(false)
+    val androidAutoLikeInsteadOfPrevious: StateFlow<Boolean> = _androidAutoLikeInsteadOfPrevious
+
     private val _downloadQuality = MutableStateFlow<String?>(null)
     val downloadQuality: StateFlow<String?> = _downloadQuality
 
@@ -298,6 +302,7 @@ class SettingsViewModel(
         getKeepServiceAlive()
         getKeepYouTubePlaylistOffline()
         getCombineLocalAndYouTubeLiked()
+        getAndroidAutoLikeInsteadOfPrevious()
         getDownloadQuality()
         getVideoDownloadQuality()
         getLocalTrackingEnabled()
@@ -410,8 +415,31 @@ class SettingsViewModel(
 
     fun setCombineLocalAndYouTubeLiked(combine: Boolean) {
         viewModelScope.launch {
+            if (combine && dataStoreManager.loggedIn.first() != DataStoreManager.TRUE) {
+                makeToast(getString(Res.string.log_in_to_YouTube))
+                return@launch
+            }
             dataStoreManager.setCombineLocalAndYouTubeLiked(combine)
             getCombineLocalAndYouTubeLiked()
+            if (combine) {
+                val applied = songRepository.syncYouTubeLikedToLocal(force = true)
+                Logger.d("SettingsViewModel", "YT liked sync applied=$applied")
+            }
+        }
+    }
+
+    private fun getAndroidAutoLikeInsteadOfPrevious() {
+        viewModelScope.launch {
+            dataStoreManager.androidAutoLikeInsteadOfPrevious.collect { enabled ->
+                _androidAutoLikeInsteadOfPrevious.value = enabled == DataStoreManager.TRUE
+            }
+        }
+    }
+
+    fun setAndroidAutoLikeInsteadOfPrevious(enabled: Boolean) {
+        viewModelScope.launch {
+            dataStoreManager.setAndroidAutoLikeInsteadOfPrevious(enabled)
+            getAndroidAutoLikeInsteadOfPrevious()
         }
     }
 
