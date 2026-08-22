@@ -71,7 +71,6 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
-                <action android:name="android.intent.action.MUSIC_PLAYER" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.APP_MUSIC" />
@@ -228,7 +227,6 @@
                 <action android:name="androidx.media3.session.MediaSessionService" />
                 <action android:name="androidx.media3.session.MediaLibraryService" />
                 <action android:name="android.media.browse.MediaBrowserService" />
-                <action android:name="android.intent.action.MEDIA_BUTTON" />
             </intent-filter>
         </service>
         <service
@@ -242,13 +240,13 @@
             </intent-filter>
         </service>
 
+        <!-- Do not register MediaButtonReceiver. An exported MEDIA_BUTTON receiver is how
+             Bluetooth/headphones restart a force-stopped media app (explicit intent, so
+             force-stop does not block it). Android Auto binds MediaBrowserService instead.
+             Headset keys still work while SimpleMediaService is already running. -->
         <receiver
             android:name="androidx.media3.session.MediaButtonReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MEDIA_BUTTON" />
-            </intent-filter>
-        </receiver>
+            tools:node="remove" />
 
         <meta-data
             android:name="com.google.android.gms.car.application"
